@@ -1,4 +1,4 @@
-
+//Krzysztof Gótrski 245079
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <chrono>
@@ -8,7 +8,7 @@
 #include "metody.h"
 using namespace std;
 
-#define DataType int
+#define DataType int // definicja rodzaju danych np. int, duble, float
 
 void check_if_open(std::ofstream& file)
 {
@@ -77,16 +77,20 @@ void del_table(E* tab,int n_tab)
 
 int main()
 {
-	int n_tab = 1;
-	int size_table[5] = { 10000, 50000, 100000, 500000, 1000000 };
-	int percent_table[8] = { 0, 250, 500, 750, 950, 990, 997, 1000 };
+	int n_tab = 100; // definicja wielkosci ile tablic
+	int size_table[5] = { 10000, 50000, 100000, 500000, 1000000 }; //rozmiary tablic
+	int percent_table[8] = { 0, 250, 500, 750, 950, 990, 997, 1000 }; // stopnie posortowania
 
-	//std::ofstream file("Merge.txt");
+	///  ----- Wybor pliku dla danego sortowania  ----
+	
+std::ofstream file("Merge.txt");
 	//std::ofstream file("Quick.txt");
-	//std::ofstream file("Intro.txt");
+//std::ofstream file("Intro.txt");
 	check_if_open(file);
 
-	//file << "Merge Sort\n";
+	///  ----- Nazwa Sortowania ----
+
+	  file << "Merge Sort\n";
 	//	file << "Quick Sort";
 	//	file << "Intro Sort";
 	for (int percent : percent_table)
@@ -101,15 +105,18 @@ int main()
 			
 			
 			auto start = std::chrono::steady_clock::now();
-			//for (int j = 0; j < n_tab; j++) merge_sort(tab[j],0, size-1);
-		    //for (int j = 0; j < n_tab; j++) quick_sort(tab[j],0, size-1);
+			///   ----- wybor sortowanaia ----
+			for (int j = 0; j < n_tab; j++) merge_sort(tab[j],0, size-1);
+			//  for (int j = 0; j < n_tab; j++) quick_sort(tab[j],0, size-1);
 			//for (int j = 0; j < n_tab; j++) intro_sort(tab[j], size);
+			
+			
 			auto end = std::chrono::steady_clock::now();
 
 			if (check_if_sorted(tab, size, n_tab) == false) cout << "blad sortowania!";
 			std::chrono::duration<double> elapsed_seconds = end - start;
 			std::cout << percent << "% " << "size:" << size << " elapsed time: " << elapsed_seconds.count() << "s\n";
-			file  << elapsed_seconds.count() << " s\n";
+			file  << elapsed_seconds.count() << "\n";
 			del_table(tab, n_tab);
 		}
 		file << "\n";
